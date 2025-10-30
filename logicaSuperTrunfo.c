@@ -17,4 +17,39 @@ int main(){
     }
     printf("Soma final C1=%.2f C2=%.2f -> %s\n",s1,s2,s1>s2?c1.ci:s2>s1?c2.ci:"Empate");
 }
+#include <stdio.h>
+
+int main() {
+    // Cartas fixas (reaproveitando o cadastro anterior)
+    char p1[]="Brasil", p2[]="Argentina";
+    int pop1=214000000, pop2=46000000, pts1=25, pts2=18;
+    float area1=8515767, area2=2780400, pib1=2.1, pib2=0.6;
+
+    // Cálculos automáticos
+    float dens1=pop1/area1, dens2=pop2/area2, ppc1=pib1*1e12/pop1, ppc2=pib2*1e12/pop2;
+
+    int modo,a1,a2; float v1a,v2a,v1b,v2b,s1=0,s2=0;
+    printf("1-Um atributo\n2-Dois atributos\nEscolha: "); scanf("%d",&modo);
+    printf("1-Pop 2-Area 3-PIB 4-Pts 5-Dens 6-PIBcap\nAtributo: "); scanf("%d",&a1);
+    if(modo==2){ printf("Outro: "); scanf("%d",&a2); if(a1==a2) return 0; }
+
+    float vals[6][2]={{pop1,pop2},{area1,area2},{pib1,pib2},{pts1,pts2},{dens1,dens2},{ppc1,ppc2}};
+    v1a=vals[a1-1][0]; v2a=vals[a1-1][1];
+
+    if(modo==1){ // comparação simples
+        printf("\n%.2f x %.2f\n",v1a,v2a);
+        if(v1a==v2a) printf("Empate!\n");
+        else printf("Vencedor: %s\n",(a1==5?v1a<v2a:v1a>v2a)?p1:p2);
+    } else { // dois atributos
+        v1b=vals[a2-1][0]; v2b=vals[a2-1][1];
+        s1+=(a1==5?v1a<v2a:v1a>v2a); s2+=(a1==5?v1a>v2a:v1a<v2a);
+        s1+=(a2==5?v1b<v2b:v1b>v2b); s2+=(a2==5?v1b>v2b:v1b<v2b);
+        printf("\nSoma %s=%.0f | %s=%.0f\n",p1,s1,p2,s2);
+        if(s1==s2) printf("Empate!\n");
+        else printf("Vencedor: %s\n",(s1>s2)?p1:p2);
+    }
+}
+
+
+
 
